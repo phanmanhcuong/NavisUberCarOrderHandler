@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -12,12 +13,10 @@ namespace NavisUberCarOrderHandler
     [ServiceContract]
     public interface IService1
     {
-
         [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        [WebInvoke(Method = "POST", UriTemplate = "/CarOrderRequestReceiver",
+        BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string CarOrderRequestReceiver(Stream stream);
 
         // TODO: Add your service operations here
     }
@@ -25,23 +24,21 @@ namespace NavisUberCarOrderHandler
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    internal class CarOrder
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        [DataMember]
+        internal string originPlace;
 
         [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
+        internal string destinationPlace;
 
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        internal string carType;
+
+        [DataMember]
+        internal string pickupTime;
+
+        [DataMember]
+        internal string phoneNumber;
     }
 }
