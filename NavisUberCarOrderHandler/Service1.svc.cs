@@ -38,7 +38,7 @@ namespace NavisUberCarOrderHandler
         private string saveRequestDataToDb(DataClassesDataContext db, CarOrder carOrder)
         {
             string success = "Success";
-
+            string fail = "Fail";
             Car_Order newOrder = new Car_Order();
             newOrder.origin_place = carOrder.originPlace;
             newOrder.destination_place = carOrder.destinationPlace;
@@ -46,10 +46,19 @@ namespace NavisUberCarOrderHandler
             newOrder.pickup_time = DateTime.ParseExact(carOrder.pickupTime, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
             newOrder.contact_number = carOrder.phoneNumber;
 
-            db.Car_Orders.InsertOnSubmit(newOrder);
-            db.SubmitChanges();
+            try
+            {
+                db.Car_Orders.InsertOnSubmit(newOrder);
+                db.SubmitChanges();
+                return success;
+            
+            }
+            catch (Exception)
+            {
+                return fail;
+            }
 
-            return success;
+
         }
     }
 }

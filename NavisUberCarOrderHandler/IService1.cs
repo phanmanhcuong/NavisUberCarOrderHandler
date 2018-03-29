@@ -27,18 +27,18 @@ namespace NavisUberCarOrderHandler
     internal class CarOrder
     {
         [DataMember]
-        internal string originPlace;
+        internal string originPlace = null;
 
         [DataMember]
-        internal string destinationPlace;
+        internal string destinationPlace = null;
 
         [DataMember]
-        internal string carType;
+        internal string carType = null;
 
         [DataMember]
-        internal string pickupTime;
+        internal string pickupTime = null;
 
         [DataMember]
-        internal string phoneNumber;
+        internal string phoneNumber = null;
     }
 }
