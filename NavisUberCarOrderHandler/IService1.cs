@@ -13,32 +13,45 @@ namespace NavisUberCarOrderHandler
     [ServiceContract]
     public interface IService1
     {
+        //[OperationContract]
+        //[WebInvoke(Method = "POST", UriTemplate = "/CarOrderRequestReceiver",
+        //BodyStyle = WebMessageBodyStyle.Bare,
+        //RequestFormat = WebMessageFormat.Json)]
+        //string CarOrderRequestReceiver(Stream stream);
+
+
+        //test send string
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/CarOrderRequestReceiver",
-        BodyStyle = WebMessageBodyStyle.Wrapped)]
+        BodyStyle = WebMessageBodyStyle.Bare)]
         string CarOrderRequestReceiver(Stream stream);
 
-        // TODO: Add your service operations here
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetCarType",
+        BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        List<string> GetCarType();
+
     }
 
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    internal class CarOrder
+    public class CarOrder
     {
         [DataMember]
-        internal string originPlace = null;
+        public string originPlace { get; set; } 
 
         [DataMember]
-        internal string destinationPlace = null;
+        public string destinationPlace { get; set; }
 
         [DataMember]
-        internal string carType = null;
+        public string carType { get; set; }
 
         [DataMember]
-        internal string pickupTime = null;
+        public DateTime pickupTime { get; set; }
 
         [DataMember]
-        internal string phoneNumber = null;
+        public string phoneNumber { get; set; } 
     }
 }

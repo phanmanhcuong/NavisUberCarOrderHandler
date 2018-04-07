@@ -10,4 +10,12 @@
       <Column Name="contact_number" Type="System.String" DbType="NChar(11) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.Lst_LoaiXe" Member="Lst_LoaiXes">
+    <Type Name="Lst_LoaiXe">
+      <Column Name="id_loai_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_loai_xe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="mo_ta" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

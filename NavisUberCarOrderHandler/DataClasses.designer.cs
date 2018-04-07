@@ -33,6 +33,9 @@ namespace NavisUberCarOrderHandler
     partial void InsertCar_Order(Car_Order instance);
     partial void UpdateCar_Order(Car_Order instance);
     partial void DeleteCar_Order(Car_Order instance);
+    partial void InsertLst_LoaiXe(Lst_LoaiXe instance);
+    partial void UpdateLst_LoaiXe(Lst_LoaiXe instance);
+    partial void DeleteLst_LoaiXe(Lst_LoaiXe instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -70,6 +73,14 @@ namespace NavisUberCarOrderHandler
 			get
 			{
 				return this.GetTable<Car_Order>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Lst_LoaiXe> Lst_LoaiXes
+		{
+			get
+			{
+				return this.GetTable<Lst_LoaiXe>();
 			}
 		}
 	}
@@ -231,6 +242,140 @@ namespace NavisUberCarOrderHandler
 					this._contact_number = value;
 					this.SendPropertyChanged("contact_number");
 					this.Oncontact_numberChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Lst_LoaiXe")]
+	public partial class Lst_LoaiXe : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id_loai_xe;
+		
+		private string _ten_loai_xe;
+		
+		private string _mo_ta;
+		
+		private System.Nullable<int> _code;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_loai_xeChanging(int value);
+    partial void Onid_loai_xeChanged();
+    partial void Onten_loai_xeChanging(string value);
+    partial void Onten_loai_xeChanged();
+    partial void Onmo_taChanging(string value);
+    partial void Onmo_taChanged();
+    partial void OncodeChanging(System.Nullable<int> value);
+    partial void OncodeChanged();
+    #endregion
+		
+		public Lst_LoaiXe()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_loai_xe", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_loai_xe
+		{
+			get
+			{
+				return this._id_loai_xe;
+			}
+			set
+			{
+				if ((this._id_loai_xe != value))
+				{
+					this.Onid_loai_xeChanging(value);
+					this.SendPropertyChanging();
+					this._id_loai_xe = value;
+					this.SendPropertyChanged("id_loai_xe");
+					this.Onid_loai_xeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ten_loai_xe", DbType="NVarChar(100)")]
+		public string ten_loai_xe
+		{
+			get
+			{
+				return this._ten_loai_xe;
+			}
+			set
+			{
+				if ((this._ten_loai_xe != value))
+				{
+					this.Onten_loai_xeChanging(value);
+					this.SendPropertyChanging();
+					this._ten_loai_xe = value;
+					this.SendPropertyChanged("ten_loai_xe");
+					this.Onten_loai_xeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mo_ta", DbType="NVarChar(200)")]
+		public string mo_ta
+		{
+			get
+			{
+				return this._mo_ta;
+			}
+			set
+			{
+				if ((this._mo_ta != value))
+				{
+					this.Onmo_taChanging(value);
+					this.SendPropertyChanging();
+					this._mo_ta = value;
+					this.SendPropertyChanged("mo_ta");
+					this.Onmo_taChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_code", DbType="Int")]
+		public System.Nullable<int> code
+		{
+			get
+			{
+				return this._code;
+			}
+			set
+			{
+				if ((this._code != value))
+				{
+					this.OncodeChanging(value);
+					this.SendPropertyChanging();
+					this._code = value;
+					this.SendPropertyChanged("code");
+					this.OncodeChanged();
 				}
 			}
 		}

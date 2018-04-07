@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
+using System.Web;
 
 namespace NavisUberCarOrderHandler
 {
@@ -17,34 +15,45 @@ namespace NavisUberCarOrderHandler
     {
         public string CarOrderRequestReceiver(Stream orderStream)
         {
-            // convert Stream Data to StreamReader
-            StreamReader reader = new StreamReader(orderStream);
-            // Read StreamReader data as string
+            StreamReader reader = new StreamReader(orderStream, Encoding.UTF8);
             string carOrderRequest = reader.ReadToEnd();
+            var items = carOrderRequest.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Split(new[] { '=' }));
 
-            CarOrder carOrder = new CarOrder();
-            MemoryStream memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(carOrderRequest));
-            DataContractJsonSerializer deserializer = new DataContractJsonSerializer(carOrder.GetType());
-            carOrder = deserializer.ReadObject(memoryStream) as CarOrder;
+            Dictionary<string, string> carOrder = new Dictionary<string, string>();
+            foreach (var item in items)
+            {
+                carOrder.Add(item[0], item[1]);
+            }
 
             using (DataClassesDataContext db = new DataClassesDataContext())
             {
                 string response = saveRequestDataToDb(db, carOrder);
                 return response;
-            
+
             }
         }
 
-        private string saveRequestDataToDb(DataClassesDataContext db, CarOrder carOrder)
+        private string saveRequestDataToDb(DataClassesDataContext db, Dictionary<string, string> carOrder)
         {
             string success = "Success";
             string fail = "Fail";
+
+            carOrder.TryGetValue("originPlace", out string originPlace);
+            carOrder.TryGetValue("destinationPlace", out string destinationPlace);
+            carOrder.TryGetValue("carType", out string carType);
+            carOrder.TryGetValue("pickupTime", out string pickupTimeString);
+            carOrder.TryGetValue("phoneNumber", out string phoneNumber);
+
+            string decodedUrl = HttpUtility.UrlDecode(originPlace);
+
             Car_Order newOrder = new Car_Order();
-            newOrder.origin_place = carOrder.originPlace;
-            newOrder.destination_place = carOrder.destinationPlace;
-            newOrder.car_type = carOrder.carType;
-            newOrder.pickup_time = DateTime.ParseExact(carOrder.pickupTime, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            newOrder.contact_number = carOrder.phoneNumber;
+            newOrder.origin_place = HttpUtility.UrlDecode(originPlace);
+            newOrder.destination_place = HttpUtility.UrlDecode(destinationPlace);
+            newOrder.car_type = HttpUtility.UrlDecode(carType);
+            string pickupTimeDecoded = HttpUtility.UrlDecode(pickupTimeString);
+            newOrder.pickup_time = DateTime.ParseExact(pickupTimeDecoded, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            newOrder.contact_number = HttpUtility.UrlDecode(phoneNumber);
 
             try
             {
@@ -58,7 +67,22 @@ namespace NavisUberCarOrderHandler
                 return fail;
             }
 
+        }
 
+        public List<string> GetCarType()
+        {
+            List<string> carTypeList = new List<string>();
+            DataClassesDataContext db = new DataClassesDataContext();
+            Table<Lst_LoaiXe> listLoaiXe = db.GetTable<Lst_LoaiXe>();
+            var query = from cartype in listLoaiXe select cartype;
+            foreach (var cartype in query)
+            {
+                carTypeList.Add(cartype.ten_loai_xe);
+            }
+
+            return carTypeList;
         }
     }
+
+
 }
