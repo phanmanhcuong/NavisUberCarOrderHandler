@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NavisUber" Class="DataClasses2DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=navistargsht.cloudapp.net,1434;Initial Catalog=NavisUber;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NavisUberConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Lst_LoaiXe" Member="Lst_LoaiXes">
+    <Type Name="Lst_LoaiXe">
+      <Column Name="id_loai_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_loai_xe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="so_ghe" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="mo_ta" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lst_DatXe" Member="Lst_DatXes">
+    <Type Name="Lst_DatXe">
+      <Column Name="id_dat_xe" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="so_ghe" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="sdt_nguoi_dat" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="diem_bat_dau" Type="System.String" DbType="NChar(255)" CanBeNull="true" />
+      <Column Name="diem_ket_thuc" Type="System.String" DbType="NChar(255)" CanBeNull="true" />
+      <Column Name="lat_bat_dau" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="long_bat_dau" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="lat_ket_thuc" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="long_ket_thuc" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="thoi_diem_dat_xe" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="thoi_diem_khoi_hanh" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="id_xe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="thoi_diem_ket_thuc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

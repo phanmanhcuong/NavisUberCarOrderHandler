@@ -26,7 +26,7 @@ namespace NavisUberCarOrderHandler
                 carOrder.Add(item[0], item[1]);
             }
 
-            using (DataClassesDataContext db = new DataClassesDataContext())
+            using (DataClasses2DataContext db = new DataClasses2DataContext())
             {
                 string response = saveRequestDataToDb(db, carOrder);
                 return response;
@@ -34,30 +34,47 @@ namespace NavisUberCarOrderHandler
             }
         }
 
-        private string saveRequestDataToDb(DataClassesDataContext db, Dictionary<string, string> carOrder)
+        private string saveRequestDataToDb(DataClasses2DataContext db, Dictionary<string, string> carOrder)
         {
             string success = "Success";
             string fail = "Fail";
 
             carOrder.TryGetValue("originPlace", out string originPlace);
+            carOrder.TryGetValue("originLatitude", out string orignLatitude);
+            carOrder.TryGetValue("originLongitude", out string originLongitude);
             carOrder.TryGetValue("destinationPlace", out string destinationPlace);
+            carOrder.TryGetValue("destinationLat", out string destinationLatitude);
+            carOrder.TryGetValue("destinationLong", out string destinationLongitude);
             carOrder.TryGetValue("carType", out string carType);
+            carOrder.TryGetValue("orderTime", out string orderTime);
             carOrder.TryGetValue("pickupTime", out string pickupTimeString);
             carOrder.TryGetValue("phoneNumber", out string phoneNumber);
 
-            string decodedUrl = HttpUtility.UrlDecode(originPlace);
+            //decode
+            Lst_DatXe newOrder = new Lst_DatXe();
+            newOrder.diem_bat_dau = HttpUtility.UrlDecode(originPlace);
+            newOrder.lat_bat_dau = Convert.ToDouble(HttpUtility.UrlDecode(orignLatitude));
+            newOrder.long_bat_dau = Convert.ToDouble(HttpUtility.UrlDecode(originLongitude));
+            newOrder.diem_ket_thuc = HttpUtility.UrlDecode(destinationPlace);
+            newOrder.lat_ket_thuc = Convert.ToDouble(HttpUtility.UrlDecode(destinationLatitude));
+            newOrder.long_ket_thuc = Convert.ToDouble(HttpUtility.UrlDecode(destinationLongitude));
 
-            Car_Order newOrder = new Car_Order();
-            newOrder.origin_place = HttpUtility.UrlDecode(originPlace);
-            newOrder.destination_place = HttpUtility.UrlDecode(destinationPlace);
-            newOrder.car_type = HttpUtility.UrlDecode(carType);
+            //split: ten xe - so ghe
+            string car_type = HttpUtility.UrlDecode(carType);
+            string[] seatNumber = car_type.Split('-');
+            newOrder.so_ghe = seatNumber[1];
+
+            string orderTimeDecoded = HttpUtility.UrlDecode(orderTime); 
+            newOrder.thoi_diem_dat_xe = DateTime.ParseExact(orderTimeDecoded, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
             string pickupTimeDecoded = HttpUtility.UrlDecode(pickupTimeString);
-            newOrder.pickup_time = DateTime.ParseExact(pickupTimeDecoded, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-            newOrder.contact_number = HttpUtility.UrlDecode(phoneNumber);
+            newOrder.thoi_diem_khoi_hanh = DateTime.ParseExact(pickupTimeDecoded, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            newOrder.sdt_nguoi_dat = HttpUtility.UrlDecode(phoneNumber);
 
             try
             {
-                db.Car_Orders.InsertOnSubmit(newOrder);
+                db.Lst_DatXes.InsertOnSubmit(newOrder);
                 db.SubmitChanges();
                 return success;
             
@@ -72,12 +89,13 @@ namespace NavisUberCarOrderHandler
         public List<string> GetCarType()
         {
             List<string> carTypeList = new List<string>();
-            DataClassesDataContext db = new DataClassesDataContext();
+            DataClasses2DataContext db = new DataClasses2DataContext();
             Table<Lst_LoaiXe> listLoaiXe = db.GetTable<Lst_LoaiXe>();
             var query = from cartype in listLoaiXe select cartype;
+            //concate car type - number of seat
             foreach (var cartype in query)
             {
-                carTypeList.Add(cartype.ten_loai_xe);
+                carTypeList.Add(cartype.ten_loai_xe + " - " + cartype.so_ghe);
             }
 
             return carTypeList;
