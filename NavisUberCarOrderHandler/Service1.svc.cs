@@ -13,6 +13,7 @@ namespace NavisUberCarOrderHandler
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
+        //handle request
         public string CarOrderRequestReceiver(Stream orderStream)
         {
             StreamReader reader = new StreamReader(orderStream, Encoding.UTF8);
@@ -34,6 +35,7 @@ namespace NavisUberCarOrderHandler
             }
         }
 
+        //save data to db
         private string saveRequestDataToDb(DataClasses2DataContext db, Dictionary<string, string> carOrder)
         {
             string success = "Success";
@@ -62,7 +64,11 @@ namespace NavisUberCarOrderHandler
             //split: ten xe - so ghe
             string car_type = HttpUtility.UrlDecode(carType);
             string[] seatNumber = car_type.Split('-');
-            newOrder.so_ghe = seatNumber[1];
+            int soGhe = Convert.ToInt32(seatNumber[1]);
+            newOrder.so_ghe = soGhe;
+
+            Table<Lst_LoaiXe> listLoaiXe = db.GetTable<Lst_LoaiXe>();
+            newOrder.id_loai_xe = (from idloaixe in listLoaiXe where Convert.ToInt32(idloaixe.so_ghe) == soGhe select idloaixe.id_loai_xe).First();         
 
             string orderTimeDecoded = HttpUtility.UrlDecode(orderTime); 
             newOrder.thoi_diem_dat_xe = DateTime.ParseExact(orderTimeDecoded, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
@@ -71,6 +77,7 @@ namespace NavisUberCarOrderHandler
             newOrder.thoi_diem_khoi_hanh = DateTime.ParseExact(pickupTimeDecoded, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
 
             newOrder.sdt_nguoi_dat = HttpUtility.UrlDecode(phoneNumber);
+            newOrder.status = 0;
 
             try
             {
@@ -79,17 +86,20 @@ namespace NavisUberCarOrderHandler
                 return success;
             
             }
-            catch (Exception)
+            catch (Exception e) 
             {
                 return fail;
             }
 
         }
 
+        //get cartype to send to app
         public List<string> GetCarType()
         {
             List<string> carTypeList = new List<string>();
+
             DataClasses2DataContext db = new DataClasses2DataContext();
+
             Table<Lst_LoaiXe> listLoaiXe = db.GetTable<Lst_LoaiXe>();
             var query = from cartype in listLoaiXe select cartype;
             //concate car type - number of seat

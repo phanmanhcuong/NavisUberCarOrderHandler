@@ -22,7 +22,7 @@ namespace NavisUberCarOrderHandler
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="NavisUber")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="NavisUberPMCuong")]
 	public partial class DataClasses2DataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,7 +39,7 @@ namespace NavisUberCarOrderHandler
     #endregion
 		
 		public DataClasses2DataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["NavisUberConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["NavisUberPMCuong"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -249,9 +249,7 @@ namespace NavisUberCarOrderHandler
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _id_dat_xe;
-		
-		private string _so_ghe;
+		private System.Nullable<int> _id_loai_xe;
 		
 		private string _sdt_nguoi_dat;
 		
@@ -277,14 +275,16 @@ namespace NavisUberCarOrderHandler
 		
 		private System.Nullable<int> _status;
 		
+		private System.Nullable<int> _so_ghe;
+		
+		private int _id_dat_xe;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void Onid_dat_xeChanging(int value);
-    partial void Onid_dat_xeChanged();
-    partial void Onso_gheChanging(string value);
-    partial void Onso_gheChanged();
+    partial void Onid_loai_xeChanging(System.Nullable<int> value);
+    partial void Onid_loai_xeChanged();
     partial void Onsdt_nguoi_datChanging(string value);
     partial void Onsdt_nguoi_datChanged();
     partial void Ondiem_bat_dauChanging(string value);
@@ -309,6 +309,10 @@ namespace NavisUberCarOrderHandler
     partial void Onthoi_diem_ket_thucChanged();
     partial void OnstatusChanging(System.Nullable<int> value);
     partial void OnstatusChanged();
+    partial void Onso_gheChanging(System.Nullable<int> value);
+    partial void Onso_gheChanged();
+    partial void Onid_dat_xeChanging(int value);
+    partial void Onid_dat_xeChanged();
     #endregion
 		
 		public Lst_DatXe()
@@ -316,42 +320,22 @@ namespace NavisUberCarOrderHandler
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_dat_xe", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int id_dat_xe
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_loai_xe", DbType="Int")]
+		public System.Nullable<int> id_loai_xe
 		{
 			get
 			{
-				return this._id_dat_xe;
+				return this._id_loai_xe;
 			}
 			set
 			{
-				if ((this._id_dat_xe != value))
+				if ((this._id_loai_xe != value))
 				{
-					this.Onid_dat_xeChanging(value);
+					this.Onid_loai_xeChanging(value);
 					this.SendPropertyChanging();
-					this._id_dat_xe = value;
-					this.SendPropertyChanged("id_dat_xe");
-					this.Onid_dat_xeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_so_ghe", DbType="VarChar(3)")]
-		public string so_ghe
-		{
-			get
-			{
-				return this._so_ghe;
-			}
-			set
-			{
-				if ((this._so_ghe != value))
-				{
-					this.Onso_gheChanging(value);
-					this.SendPropertyChanging();
-					this._so_ghe = value;
-					this.SendPropertyChanged("so_ghe");
-					this.Onso_gheChanged();
+					this._id_loai_xe = value;
+					this.SendPropertyChanged("id_loai_xe");
+					this.Onid_loai_xeChanged();
 				}
 			}
 		}
@@ -592,6 +576,46 @@ namespace NavisUberCarOrderHandler
 					this._status = value;
 					this.SendPropertyChanged("status");
 					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_so_ghe", DbType="Int")]
+		public System.Nullable<int> so_ghe
+		{
+			get
+			{
+				return this._so_ghe;
+			}
+			set
+			{
+				if ((this._so_ghe != value))
+				{
+					this.Onso_gheChanging(value);
+					this.SendPropertyChanging();
+					this._so_ghe = value;
+					this.SendPropertyChanged("so_ghe");
+					this.Onso_gheChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_dat_xe", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_dat_xe
+		{
+			get
+			{
+				return this._id_dat_xe;
+			}
+			set
+			{
+				if ((this._id_dat_xe != value))
+				{
+					this.Onid_dat_xeChanging(value);
+					this.SendPropertyChanging();
+					this._id_dat_xe = value;
+					this.SendPropertyChanged("id_dat_xe");
+					this.Onid_dat_xeChanged();
 				}
 			}
 		}
