@@ -7,10 +7,12 @@
       <Column Name="so_ghe" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
       <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="mo_ta" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="Lst_LoaiXe_Lst_Xe" Member="Lst_Xes" ThisKey="id_loai_xe" OtherKey="id_loai_xe" Type="Lst_Xe" />
     </Type>
   </Table>
   <Table Name="dbo.Lst_DatXe" Member="Lst_DatXes">
     <Type Name="Lst_DatXe">
+      <Column Name="id_dat_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="id_loai_xe" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="sdt_nguoi_dat" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
       <Column Name="diem_bat_dau" Type="System.String" DbType="NChar(255)" CanBeNull="true" />
@@ -25,7 +27,68 @@
       <Column Name="thoi_diem_ket_thuc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="so_ghe" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="id_dat_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="registrationID" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lst_Xe" Member="Lst_Xes">
+    <Type Name="Lst_Xe">
+      <Column Name="id_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="bien_kiem_soat" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="vin_number" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="id_thiet_bi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_loai_xe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_nhom_xe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_lai_xe_chinh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="loai_nhien_lieu" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dinh_muc_nhien_lieu" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="id_don_vi_nhien_lieu" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="van_toc_gioi_han" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="rezo_speed_gps" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nhom_xe_thong_tu" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="thoi_gian" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="last_time_driving" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dang_ky_tong_cuc" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="so_luong_camera" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="loai_xe" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="chuky_baoduong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lan_baoduong_cuoi" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngay_het_baohiem" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngay_mua_baohiem" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngay_thaydau" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="noidung_baoduong" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="noidung_thaydau" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="ghichu" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="cam1_rotate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cam2_rotate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cam_select" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ngay_het_dangkiem" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RFID_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Lst_LoaiXe_Lst_Xe" Member="Lst_LoaiXe" ThisKey="id_loai_xe" OtherKey="id_loai_xe" Type="Lst_LoaiXe" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lst_LaiXe" Member="Lst_LaiXes">
+    <Type Name="Lst_LaiXe">
+      <Column Name="id_lai_xe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_lai_xe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ngay_sinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="gioi_tinh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nhom_mau" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="so_dien_thoai" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CMND" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="giay_phep_lx" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ngay_cap" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngay_het_han" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="so_hieu_lai_xe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vi_tri_lam_viec" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_RFID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_nguoi_dung" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="thoi_gian" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="nghi_viec" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="id_thiet_bi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="id_donvi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ma_canbo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

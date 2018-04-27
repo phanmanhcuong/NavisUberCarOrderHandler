@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses2">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 9.875" name="DataClasses2">
   <DataContextMoniker Name="/DataClasses2DataContext" />
   <nestedChildShapes>
     <classShape Id="24f71aca-f989-4d09-905c-a5ca20507e63" absoluteBounds="0.875, 0.5, 2, 1.7708968098958331">
@@ -8,10 +8,29 @@
         <elementListCompartment Id="4f45903a-6590-4ec7-aa46-0e999ab2fec0" absoluteBounds="0.89000000000000012, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="8a70381c-8806-432c-b92d-022cef339910" absoluteBounds="3.625, 0.5, 2, 3.6939111328124996">
+    <classShape Id="898d4675-3eb9-4b3c-9c2f-2a41f218a783" absoluteBounds="4.125, 0.5, 2, 3.8862125651041666">
       <DataClassMoniker Name="/DataClasses2DataContext/Lst_DatXe" />
       <nestedChildShapes>
-        <elementListCompartment Id="e291164f-7538-4fda-bcfc-c90a0c5270b4" absoluteBounds="3.64, 0.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ba84f566-a5c7-49d8-b2e2-597aa2b26912" absoluteBounds="4.14, 0.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f1bba5d5-5c09-433e-ab5d-a1b3fde63a3b" absoluteBounds="1, 2.5, 2, 6.7707340494791657">
+      <DataClassMoniker Name="/DataClasses2DataContext/Lst_Xe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4cc6539d-4362-4497-9e5f-f04064ecc07a" absoluteBounds="1.0150000000000001, 2.96, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.9375 : 2.27089680989583); (1.9375 : 2.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClasses2DataContext/Lst_LoaiXe/Lst_LoaiXe_Lst_Xe" />
+      <nodes>
+        <classShapeMoniker Id="24f71aca-f989-4d09-905c-a5ca20507e63" />
+        <classShapeMoniker Id="f1bba5d5-5c09-433e-ab5d-a1b3fde63a3b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="47a674cc-4392-4121-8292-0508d98a47b2" absoluteBounds="4.125, 4.75, 2, 4.8477197265625">
+      <DataClassMoniker Name="/DataClasses2DataContext/Lst_LaiXe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5439cdc-3160-42a2-a08d-76ffdb0c7a0b" absoluteBounds="4.14, 5.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
