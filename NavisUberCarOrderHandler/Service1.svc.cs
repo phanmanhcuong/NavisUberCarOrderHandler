@@ -125,12 +125,13 @@ namespace NavisUberCarOrderHandler
 
             int carID = idData.id_xe;
             int orderID = idData.id_dat_xe;
+            int status = idData.trang_thai_cong_viec;
 
-            GetInfoFromDb(carID, orderID);                  
+            GetInfoFromDb(status, carID, orderID);                  
         }
 
         //get info to send request to firebase server
-        private void GetInfoFromDb(int carID, int orderID)
+        private void GetInfoFromDb(int status, int carID, int orderID)
         {
             DataClasses2DataContext db = new DataClasses2DataContext();
             //get car order from Lst_DatXe
@@ -148,11 +149,11 @@ namespace NavisUberCarOrderHandler
             var queryDriver = from d in lst_laixe where d.id_lai_xe == car.id_lai_xe_chinh select d;
             var driver = queryDriver.FirstOrDefault();
 
-            RequestFirebaseSendNoti(order, car, driver);
+            RequestFirebaseSendNoti(status, order, car, driver);
         }
 
         //send data to push notification from firebase server
-        private void RequestFirebaseSendNoti(Lst_DatXe order, Lst_Xe car, Lst_LaiXe driver)
+        private void RequestFirebaseSendNoti(int status, Lst_DatXe order, Lst_Xe car, Lst_LaiXe driver)
         {
             string serverKey = "AAAA62U35Pg:APA91bHm0D9udChK9kBnoZP_5yUDHYOPXy62a4pTa_bTbdpEYY2-Em727VMPElPgm0aXRXjDGFwBltn6ZsO9snHZne6rcR9JhsejNnm0JVqpuEAjZzdcymKXy5bHbGMDYGcRJsc_thFT";
 
@@ -161,7 +162,15 @@ namespace NavisUberCarOrderHandler
             request.ContentType = "application/json";
             request.Headers.Add(HttpRequestHeader.Authorization, "key=" + serverKey);
 
-            string notiTitle = "Thông báo xe đã nhận:";
+            string notiTitle;
+            if (status == 1)
+            {
+                notiTitle = "Thông báo xe đã nhận:";
+            }
+            else
+            {
+                notiTitle = "Thông báo hủy xe:";
+            }
             string notiMessage = "- Từ: " + order.diem_bat_dau.Trim() + "." + Environment.NewLine + "- Đến: " + order.diem_ket_thuc.Trim() + "."
                  + Environment.NewLine + "- Xe: " + car.loai_xe  + Environment.NewLine + "- Biển kiểm soát: " + car.bien_kiem_soat
                  + Environment.NewLine + "- Lái xe: " + driver.ten_lai_xe + Environment.NewLine + "- Số điện thoại: " + driver.so_dien_thoai
@@ -203,5 +212,6 @@ namespace NavisUberCarOrderHandler
     {
         public int id_xe { get; set; }
         public int id_dat_xe { get; set; }
+        public int trang_thai_cong_viec { get; set; }
     }
 }
